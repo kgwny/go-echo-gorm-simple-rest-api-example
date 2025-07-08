@@ -1,6 +1,7 @@
 package main
 
 import (
+	"my-app/controller"
 	"my-app/model"
 	"net/http"
 
@@ -21,19 +22,19 @@ func connect(c echo.Context) error {
 
 func main() {
 
-	e := echo.New()
-	e.GET("/", connect)
-	e.Logger.Fatal(e.Start(":8080"))
-
 	// e := echo.New()
-	// db, _ := model.DB.DB()
-
-	// defer db.Close()
-
-	// e.GET("/users", controller.GetUsers)
-	// e.GET("/users/:id", controller.GetUser)
-	// e.POST("/users", controller.CreateUser)
-	// e.PUT("/users/:id", controller.UpdateUser)
-	// e.DELETE("/users/id,", controller.DeleteUser)
+	// e.GET("/", connect)
 	// e.Logger.Fatal(e.Start(":8080"))
+
+	e := echo.New()
+	db, _ := model.DB.DB()
+
+	defer db.Close()
+
+	e.GET("/users", controller.GetUsers)
+	e.GET("/users/:id", controller.GetUser)
+	e.POST("/users", controller.CreateUser)
+	e.PUT("/users/:id", controller.UpdateUser)
+	e.DELETE("/users/id,", controller.DeleteUser)
+	e.Logger.Fatal(e.Start(":8080"))
 }
